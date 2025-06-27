@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import MusicRecommendation from './MusicRecommendation';
-import { Music, Pause } from 'lucide-react';
+import { Music, Pause, Shield } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const App: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(true);
   const [audio] = useState(new Audio('/Limerick -班得瑞.mp3'));
+  const navigate = useNavigate();
 
   useEffect(() => {
     audio.loop = true;
@@ -47,18 +49,27 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 to-purple-50 py-12 px-4 sm:px-6 lg:px-8">
-      {/* 背景音乐控制按钮 */}
-      <button
-        onClick={togglePlay}
-        className="fixed top-4 right-4 p-3 rounded-full bg-white/90 shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-sm group"
-        title={isPlaying ? '暂停背景音乐' : '播放背景音乐'}
-      >
-        {isPlaying ? (
-          <Pause className="w-6 h-6 text-purple-600 group-hover:scale-110 transition-transform" />
-        ) : (
-          <Music className="w-6 h-6 text-purple-600 group-hover:scale-110 transition-transform" />
-        )}
-      </button>
+      {/* 右上角按钮组 */}
+      <div className="fixed top-4 right-4 flex gap-3 z-50">
+        <button
+          onClick={() => navigate('/admin')}
+          className="p-3 rounded-full bg-white/90 shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-sm group"
+          title="管理后台"
+        >
+          <Shield className="w-6 h-6 text-purple-600 group-hover:scale-110 transition-transform" />
+        </button>
+        <button
+          onClick={togglePlay}
+          className="p-3 rounded-full bg-white/90 shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-sm group"
+          title={isPlaying ? '暂停背景音乐' : '播放背景音乐'}
+        >
+          {isPlaying ? (
+            <Pause className="w-6 h-6 text-purple-600 group-hover:scale-110 transition-transform" />
+          ) : (
+            <Music className="w-6 h-6 text-purple-600 group-hover:scale-110 transition-transform" />
+          )}
+        </button>
+      </div>
 
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-12">
